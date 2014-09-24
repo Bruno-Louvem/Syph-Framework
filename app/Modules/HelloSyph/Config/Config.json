@@ -1,0 +1,9 @@
+{
+    "module": "HelloSyph",
+    "template": {
+        "HelloSyph":{
+            "pack": "default",
+            "index": "index"
+        }
+    }
+}
