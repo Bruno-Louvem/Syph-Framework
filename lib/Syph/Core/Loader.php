@@ -104,7 +104,7 @@ class Loader {
      * @return void
      */
     public function loadClass($className) {
-        try {
+        
             if (null === $this->_namespace || $this->_namespace . $this->_namespaceSeparator === substr($className, 0, strlen($this->_namespace . $this->_namespaceSeparator))) {
                 $fileName = '';
                 $namespace = '';
@@ -119,14 +119,7 @@ class Loader {
                     throw new Exception("Erro no Autoload</br>");
                 }
             }
-        } catch (Exception $exc) {
-            echo $exc->getMessage();
-            print_r($exc->getTrace());
-            foreach ($exc->getTrace() as $t){
-            echo $t['args'][0]."</br>";
-            }
-            
-        }
+        
 
 
 //echo $this->_namespace.$this->_namespaceSeparator."</br>";

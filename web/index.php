@@ -8,7 +8,20 @@ define('ROOT',dirname(__FILE__));
 require '..'.DS.'config'.DS.'bootstrap.php';
 
 //inicialização do aplicativo
-$controller->startApp();
+try {
+    if($controller->initApp()){
+        $controller->executeApp();
+    }else{
+        throw new Exception;
+    }
+    
+} catch (Exception $exc) {
+    echo $exc->getMessage();
+    echo $exc->getTraceAsString();
+}
+
+
+
 
 
 

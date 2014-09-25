@@ -25,7 +25,11 @@ class HelloSyphController extends ApplicationController{
     public function HelloSyph() {
         if($this->_config){
             $this->SyphCreateView();
-//            return $response::View($this->_config);
+        }
+    }
+    public function GenerateModule() {
+        if($this->_config){
+            $this->SyphCreateView();
         }
     }
 }

@@ -4,6 +4,10 @@
         "HelloSyph":{
             "pack": "default",
             "index": "index"
+        },
+        "GenerateModule":{
+            "pack": "default",
+            "index": "form"
         }
     }
 }

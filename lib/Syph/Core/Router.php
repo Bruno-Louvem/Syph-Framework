@@ -6,7 +6,9 @@
  */
 namespace Syph\Core;
 
-use Syph\Core\Request;
+use Syph\Core\Master\SyphRegister;
+
+
 class Router {
     
     use \Syph\Util\Inflector;
@@ -19,15 +21,14 @@ class Router {
     private $params;
     
     
-    public function route($view = NULL) {
-        $this->cleanUrl();
-        $this->setModule();
-        $this->loadModule($view);
+    public function route() {
+        $this->loadModule();
     }
     
     public function __construct() {
-        $this->request = new Request;
-        $this->setRequest($this->request);
+        $this->request = SyphRegister::get("request");
+        $this->cleanUrl();
+        $this->setModule();
     }
 
     
@@ -93,13 +94,13 @@ class Router {
         }
     }
     
-    private function loadModule($view) {
+    private function loadModule() {
         $this->module['controller'] = "Modules\\".$this->module['controller'] ."\\".$this->module['controller'] . 'Controller';
         $controller = $this->module['controller'];
         $action = $this->module['action'];
         $module = new $controller($this->module);
         
-        $module->$action($view);
+        $module->$action();
     }
     
     private function getmoduleArgs() {

@@ -12,12 +12,15 @@
  * @author bruno
  */
 namespace Syph\Controller;
+use Syph\Core\Master\Core;
 use Syph\Model\FileSystem\FileHandler;
 use Syph\Core\Response;
 
 
-class ApplicationController {
+class ApplicationController extends Core{
     protected $_config;
+    protected $_view;
+    protected $_response;
     
     /**
      * Faz a leitura do arquivo de configuração do Módulo.

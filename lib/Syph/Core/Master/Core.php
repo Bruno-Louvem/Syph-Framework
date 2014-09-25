@@ -11,6 +11,17 @@
  *
  * @author bruno
  */
+namespace Syph\Core\Master;
+use Syph\Core\Master\SyphRegister;
 class Core {
-    //put your code here
+    protected function addObjectInApp($obj) {
+        SyphRegister::add($obj, end(explode("\\",get_class($obj))));
+    }
+    protected function getObjectInApp($name) {
+        return SyphRegister::get($name);
+    }
+    
+    protected function initAppComponents() {
+        
+    }
 }

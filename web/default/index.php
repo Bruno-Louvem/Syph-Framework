@@ -79,9 +79,9 @@ $cp = end(explode(DS,dirname(__FILE__)));
           <p><a class="btn btn-default btn-info" href="#" role="button">Docs &raquo;</a></p>
         </div>
         <div id="docs" class="col-md-4 tool">
-          <h2>Exemplos</h2>
-          <p>Veja este exmplo de reescrita. </p>
-          <p><a class="btn btn-default btn-info" href="/usuarios/read/id/25" role="button">Docs &raquo;</a></p>
+          <h2>Gerador de Módulos</h2>
+          <p>Use o SyphGenerator para gerar os módulos da sua aplicação. </p>
+          <p><a class="btn btn-default btn-info" href="/helloSyph/GenerateModule" role="button">Docs &raquo;</a></p>
         </div>
         
         
