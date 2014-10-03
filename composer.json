@@ -1,5 +1,6 @@
 {
     "require": {
+		"doctrine/orm": "2.x@beta",
         "twig/twig": "1.x"
     }
 }

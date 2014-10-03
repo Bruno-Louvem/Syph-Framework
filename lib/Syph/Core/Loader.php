@@ -122,8 +122,8 @@ class Loader {
         
 
 
-//echo $this->_namespace.$this->_namespaceSeparator."</br>";
-//echo substr($className, 0, strlen($this->_namespace.$this->_namespaceSeparator));
+            //echo $this->_namespace.$this->_namespaceSeparator."</br>";
+            //echo substr($className, 0, strlen($this->_namespace.$this->_namespaceSeparator));
     }
-
+ 
 }

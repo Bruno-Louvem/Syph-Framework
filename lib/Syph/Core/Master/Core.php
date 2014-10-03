@@ -13,15 +13,45 @@
  */
 namespace Syph\Core\Master;
 use Syph\Core\Master\SyphRegister;
+use Syph\Core\Request;
+use Syph\Core\Response;
+use Syph\Core\Router;
+use Syph\Core\View;
+use Syph\Model\DB\DB;
 class Core {
+    
+    protected $_config;
+    
+    
+    public function __construct() {
+        $this->initAppComponents();
+    }
+    
     protected function addObjectInApp($obj) {
         SyphRegister::add($obj, end(explode("\\",get_class($obj))));
     }
+    
     protected function getObjectInApp($name) {
         return SyphRegister::get($name);
     }
     
-    protected function initAppComponents() {
-        
+    protected function verifyObjectInApp($name) {
+        return SyphRegister::exists($name);
+    }
+    
+    protected function createView() {
+        $view = new View();
+        $this->addObjectInApp($view);
+    }
+    
+    private function initAppComponents() {
+        $request = new Request;
+        $this->addObjectInApp($request);
+        $response = new Response();
+        $this->addObjectInApp($response);
+        $router = new Router();
+        $this->addObjectInApp($router);
+        $dbal = new DB;
+        $this->addObjectInApp($dbal);
     }
 }

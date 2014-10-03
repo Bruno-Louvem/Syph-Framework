@@ -14,22 +14,28 @@
 namespace Modules\HelloSyph;
 
 use Syph\Controller\ApplicationController;
+use Syph\Core\View;
+//use Models\Entities\User;
 
 class HelloSyphController extends ApplicationController{
     
     public function __construct($args) {
         $this->args = $args;
-        $this->SyphLoaderConfig(dirname(__FILE__));
+        $this->SyphLoaderConfig(dirname(__FILE__).DS."Config".DS,"Config");
     }
     
     public function HelloSyph() {
         if($this->_config){
-            $this->SyphCreateView();
+            
+            return $this->SyphCreateView();
         }
     }
     public function GenerateModule() {
         if($this->_config){
-            $this->SyphCreateView();
+            $ORM = $this->getObjectInApp('db')->getEntityManager();
+            $user = $ORM->find('User',1);
+            View::setVars('coprigth',$user->getNome());
+            return $this->SyphCreateView();
         }
     }
 }

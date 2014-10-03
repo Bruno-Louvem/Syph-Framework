@@ -22,13 +22,13 @@ class Router {
     
     
     public function route() {
-        $this->loadModule();
+        $this->cleanUrl();
+        $this->setModule();
+        return $this->loadModule();
     }
     
     public function __construct() {
         $this->request = SyphRegister::get("request");
-        $this->cleanUrl();
-        $this->setModule();
     }
 
     
@@ -76,7 +76,7 @@ class Router {
             $this->request->setParametro(0,$this->upperCamelCase($this->request->getParametro(0)));
 
             if ($this->request->getUrl() == '/') {
-                $this->module = $this->getDefaultRoute();
+                $this->module = self::getDefaultRoute();
             } else {
                 $this->module['controller'] = $this->request->getParametro(0);
                 if (isset($this->request->getParametros()[0])) {
@@ -87,10 +87,10 @@ class Router {
         }
         $this->getModuleArgs();
         if (!isset($this->module['action']) || empty($this->module['action'])) {
-            $this->module['action'] = 'index';
+            $this->module['action'] = 'HelloSyph';
         }
         if (!isset($this->module['controller']) || empty($this->module['controller'])) {
-            $this->module['controller'] = 'Index';
+            $this->module['controller'] = 'HelloSyph';
         }
     }
     
@@ -100,7 +100,7 @@ class Router {
         $action = $this->module['action'];
         $module = new $controller($this->module);
         
-        $module->$action();
+        return $module->$action();
     }
     
     private function getmoduleArgs() {
@@ -110,7 +110,7 @@ class Router {
             }
         }
     }
-    private function getDefaultRoute() {
+    public static function getDefaultRoute() {
         return array(
                     'model' => 'HelloSyph',
                     'controller' => 'HelloSyph',

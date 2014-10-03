@@ -31,7 +31,7 @@ class FileHandler {
     
     public static function load($path_to_file,$ext = "text") {
         if($ext == "json"){
-            $content = json_decode(file_get_contents($path_to_file.DS."Config".DS."Config.".$ext),true);
+            $content = json_decode(file_get_contents($path_to_file.".".$ext),true);
         }  else {
             $content = parse_str(file_get_contents($path_to_file.DS."Config".DS."Config.".$ext),true);
         }

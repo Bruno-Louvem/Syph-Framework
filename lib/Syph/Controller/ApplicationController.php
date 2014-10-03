@@ -14,10 +14,11 @@
 namespace Syph\Controller;
 use Syph\Core\Master\Core;
 use Syph\Model\FileSystem\FileHandler;
-use Syph\Core\Response;
+//use Syph\Core\Response;
 
 
 class ApplicationController extends Core{
+    
     protected $_config;
     protected $_view;
     protected $_response;
@@ -27,15 +28,23 @@ class ApplicationController extends Core{
      * @param string $path Nome do Módulo no caminho de configuração.
      * @param string $ext = <b>"json"</b> extensão do arquivo de configuração, (Padrão json).
      */
-    protected function SyphLoaderConfig($path,$ext = "json") {
-        if(FileHandler::isDir($path.DS."Config")){
-            $this->_config = FileHandler::load($path, $ext);
+    protected function SyphLoaderConfig($path,$file,$ext = "json") {
+        if(FileHandler::isDir($path)){
+            $this->_config = FileHandler::load($path.$file,$ext);
         }
     }
     /**
      * Gera uma view com as configurações padrões.
      */
     protected function SyphCreateView() {
-        Response::View($this->_config);
+        /**
+         * Verifica se a view ja foi criada caso não o core a instancia
+         */
+        if(!$this->verifyObjectInApp('view')){
+            $this->createView();
+            $this->getObjectInApp('view')->setConf($this->_config);
+        }
+//        Response::View($this->_config);
+        return $this->getObjectInApp('view');
     }
 }

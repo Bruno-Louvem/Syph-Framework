@@ -14,19 +14,29 @@ namespace Syph\Core;
  * @author bruno
  */
 class View {
-    private $vars = array();
+    private static $vars = array();
+    private $_conf;
     
-    function getVar($key) {
-        return $this->vars[$key];
+    public static function getVar($key) {
+        return self::$vars[$key];
     }
     
-    function getVars() {
-        return $this->vars;
+    public static function getVars() {
+        return self::$vars;
     }
 
-    function setVars($key,$value) {
-        $this->vars[$key] = $value;
+    public static function setVars($key,$value) {
+        self::$vars[$key] = $value;
     }
+    
+    function getConf() {
+        return $this->_conf;
+    }
+
+    function setConf($conf) {
+        $this->_conf = $conf;
+    }
+
 
 
 }
