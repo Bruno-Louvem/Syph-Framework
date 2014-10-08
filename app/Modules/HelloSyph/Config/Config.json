@@ -8,6 +8,10 @@
         "GenerateModule":{
             "pack": "default",
             "index": "form"
+        },
+        "CreateModule":{
+            "pack": "default",
+            "index": "success"
         }
     }
 }

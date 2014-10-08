@@ -6,7 +6,7 @@
  * and open the template in the editor.
  */
 
-namespace Syph\Core;
+namespace Syph\Http;
 
 /**
  * Description of Request
@@ -22,8 +22,12 @@ class Request {
     private $url;
     private $base_url;
     
-    function getPost() {
-        return $this->post;
+    function getPost($key = null) {
+        if(!is_null($key)){
+            return $this->post[$key];
+        }else{
+            return $this->post;
+        }
     }
 
     function getGet() {

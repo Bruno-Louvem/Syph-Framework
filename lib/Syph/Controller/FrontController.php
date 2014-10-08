@@ -12,15 +12,15 @@ namespace Syph\Controller;
 use Syph\Core\Master\Core;
 
 
-class FrontController extends Core {
+class FrontController {
 
-    use \Syph\Util\RequestHandler;
+    use \Syph\Http\RequestHandler;
 
     /**
      * Instancia o Core com o contruct do FrontController
      */
     public function __construct() {
-        parent::__construct();
+        Core::getCore();
     }
     
     /**
@@ -37,8 +37,8 @@ class FrontController extends Core {
      * @return boolean
      */
     public function configApp() {
-        $this->setRequest($this->getObjectInApp('request'));
-        if($this->getObjectInApp('request')->getUrl()){
+        $this->setRequest(Core::getObjectInApp('request'));
+        if(Core::getObjectInApp('request')->getUrl()){
             return true;
         }else{
             return false;
@@ -49,7 +49,7 @@ class FrontController extends Core {
      * Executa a aplicação retornando o controller roteado para o <b>Response</b>;
      */
     public function executeApp() {
-        $this->getObjectInApp('response')->responseApp($this->getObjectInApp('router')->route());
+        Core::getObjectInApp('response')->responseApp(Core::getObjectInApp('router')->route());
     }
     
     /**
@@ -58,7 +58,7 @@ class FrontController extends Core {
      * @return Object Objeto selecionado
      */
     public function getComponent($name) {
-        return $this->getObjectInApp($name);
+        return Core::getObjectInApp($name);
     }
 
 }

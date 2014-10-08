@@ -11,7 +11,7 @@
  *
  * @author bruno
  */
-namespace Syph\Core;
+namespace Syph\Http;
 
 use Syph\Core\Master\SyphRegister;
 use Syph\Core\View;

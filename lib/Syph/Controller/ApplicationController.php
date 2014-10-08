@@ -17,12 +17,17 @@ use Syph\Model\FileSystem\FileHandler;
 //use Syph\Core\Response;
 
 
-class ApplicationController extends Core{
+class ApplicationController{
     
     protected $_config;
     protected $_view;
     protected $_response;
     
+    public function __construct() {
+        if(FileHandler::isDir($path = realpath(dirname(__FILE__)).'/../../../app/Config')){
+            $this->_configApp = include_once($path.'/application.php');
+        }
+    }
     /**
      * Faz a leitura do arquivo de configuração do Módulo.
      * @param string $path Nome do Módulo no caminho de configuração.
@@ -40,11 +45,10 @@ class ApplicationController extends Core{
         /**
          * Verifica se a view ja foi criada caso não o core a instancia
          */
-        if(!$this->verifyObjectInApp('view')){
-            $this->createView();
-            $this->getObjectInApp('view')->setConf($this->_config);
+        if(!Core::verifyObjectInApp('view')){
+            Core::createView();
+            Core::getObjectInApp('view')->setConf($this->_config);
         }
-//        Response::View($this->_config);
-        return $this->getObjectInApp('view');
+        return Core::getObjectInApp('view');
     }
 }

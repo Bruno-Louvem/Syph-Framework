@@ -4,7 +4,7 @@
  *
  * @author bruno
  */
-namespace Syph\Core;
+namespace Syph\Routing;
 
 use Syph\Core\Master\SyphRegister;
 
@@ -12,19 +12,24 @@ use Syph\Core\Master\SyphRegister;
 class Router {
     
     use \Syph\Util\Inflector;
-    use \Syph\Util\RequestHandler;
+    use \Syph\Http\RequestHandler;
 
     private $config;
     public $request;
     private $url;
     public $module;
     private $params;
-    
-    
+    private $redirect;
+
+
     public function route() {
         $this->cleanUrl();
         $this->setModule();
         return $this->loadModule();
+    }
+    public function redirect($route) {
+        $this->bindModule($route);
+        return $this->loadBindModule();
     }
     
     public function __construct() {
@@ -66,6 +71,11 @@ class Router {
         }
     }
 
+    public function bindModule($route) {
+        $this->redirect = $route;
+        
+    }
+    
     private function setModule() {
         if (isset($this->config->router[$this->request->getUrl()])) {
             $this->module = $this->config->router[$this->request->getUrl()];
@@ -87,7 +97,7 @@ class Router {
         }
         $this->getModuleArgs();
         if (!isset($this->module['action']) || empty($this->module['action'])) {
-            $this->module['action'] = 'HelloSyph';
+            $this->module['action'] = 'read';
         }
         if (!isset($this->module['controller']) || empty($this->module['controller'])) {
             $this->module['controller'] = 'HelloSyph';
@@ -98,6 +108,14 @@ class Router {
         $this->module['controller'] = "Modules\\".$this->module['controller'] ."\\".$this->module['controller'] . 'Controller';
         $controller = $this->module['controller'];
         $action = $this->module['action'];
+        $module = new $controller($this->module);
+        
+        return $module->$action();
+    }
+    private function loadBindModule() {
+        $this->redirect['controller'] = "Modules\\".$this->redirect['controller'] ."\\".$this->redirect['controller'] . 'Controller';
+        $controller = $this->redirect['controller'];
+        $action = $this->redirect['action'];
         $module = new $controller($this->module);
         
         return $module->$action();

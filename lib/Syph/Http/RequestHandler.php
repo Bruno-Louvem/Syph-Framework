@@ -12,7 +12,7 @@
  * @author bruno
  */
 
-namespace Syph\Util;
+namespace Syph\Http;
 
 trait RequestHandler {
 
@@ -22,7 +22,7 @@ trait RequestHandler {
      * @return  Array, retorna um vetor com os dados da requisição atual 
      * 
      */
-    public function setRequest(\Syph\Core\Request $request) {
+    public function setRequest(\Syph\Http\Request $request) {
         $request->setPost($this->post());
         $request->setGet($this->get());
         $request->setParametros($this->params());

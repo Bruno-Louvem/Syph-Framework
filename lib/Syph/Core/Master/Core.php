@@ -13,45 +13,53 @@
  */
 namespace Syph\Core\Master;
 use Syph\Core\Master\SyphRegister;
-use Syph\Core\Request;
-use Syph\Core\Response;
-use Syph\Core\Router;
+use Syph\Http\Request;
+use Syph\Http\Response;
+use Syph\Routing\Router;
 use Syph\Core\View;
 use Syph\Model\DB\DB;
 class Core {
     
     protected $_config;
     
-    
-    public function __construct() {
+    protected static $_instance;
+
+    private function __construct() {
         $this->initAppComponents();
     }
     
-    protected function addObjectInApp($obj) {
-        SyphRegister::add($obj, end(explode("\\",get_class($obj))));
+    public static function getCore() {
+      if (!self::$_instance) {
+        self::$_instance = new Core();
+      }
+      return self::$_instance;
     }
     
-    protected function getObjectInApp($name) {
+    public static function addObjectInApp($obj) {
+        SyphRegister::add($obj, end($arr_obj = explode("\\",get_class($obj))));
+    }
+    
+    public static function getObjectInApp($name) {
         return SyphRegister::get($name);
     }
     
-    protected function verifyObjectInApp($name) {
+    public static function verifyObjectInApp($name) {
         return SyphRegister::exists($name);
     }
     
-    protected function createView() {
+    public static function createView() {
         $view = new View();
-        $this->addObjectInApp($view);
+        self::addObjectInApp($view);
     }
     
-    private function initAppComponents() {
+    public function initAppComponents() {
         $request = new Request;
-        $this->addObjectInApp($request);
+        self::addObjectInApp($request);
         $response = new Response();
-        $this->addObjectInApp($response);
+        self::addObjectInApp($response);
         $router = new Router();
-        $this->addObjectInApp($router);
+        self::addObjectInApp($router);
         $dbal = new DB;
-        $this->addObjectInApp($dbal);
+        self::addObjectInApp($dbal);
     }
 }
