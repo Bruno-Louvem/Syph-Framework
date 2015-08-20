@@ -6,8 +6,12 @@
  * Time: 12:02
  */
 
+use Syph\Http\Http;
 include_once('bootstrap.php');
 include_once('routing.php');
+
+
+
 $response = $app->handleRequest(new Http());
 
 try{

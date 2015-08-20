@@ -6,12 +6,14 @@
  * Date: 12/08/2015
  * Time: 14:48
  */
+use Syph\View\View;
+use Syph\View\Renderer;
+
 class HomeController
 {
     public function index(){
-        return "Bem vindo ao Syph";
+        $title = 'Syph';
+        return View::render(new Renderer('index.php'),compact('title'));
     }
-
-
 
 }

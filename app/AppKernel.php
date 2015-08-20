@@ -6,17 +6,21 @@
  * Date: 12/08/2015
  * Time: 12:02
  */
-include_once(realpath(dirname(__FILE__)).'/services/Interfaces/HttpInterface.php');
+use Syph\Http\Interfaces\HttpInterface;
+use Syph\Routing\Router;
+use Syph\Autoload\ClassLoader;
+
 class AppKernel
 {
 
     private $http;
+    private $loaded = array();
     /**
      * Construtor do Kernel.
      */
-    public function __construct()
+    public function __construct(array $env)
     {
-
+        $this->boot($env);
     }
 
     public function handleRequest(HttpInterface $http)
@@ -68,6 +72,16 @@ class AppKernel
             return $controller->$action($args);
         }
         return $controller->$action();
+    }
+
+    private function boot($env)
+    {
+        foreach($env['packages'] as $name => $path){
+            $loader = new ClassLoader($name,$path);
+            $loader->register();
+            $this->loaded[] = $loader;
+        }
+//        var_dump($this->loaded);die;
     }
 
 }
