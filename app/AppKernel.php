@@ -9,30 +9,34 @@
 use Syph\Http\Interfaces\HttpInterface;
 use Syph\Routing\Router;
 use Syph\Autoload\ClassLoader;
+use Syph\AppBuilder\Interfaces\BuilderInterface;
 
 class AppKernel
 {
 
     private $http;
+    private $app;
     private $loaded = array();
     /**
      * Construtor do Kernel.
      */
     public function __construct(array $env)
     {
-        $this->boot($env);
+        $this->boot($env['packages']);
     }
 
-    public function handleRequest(HttpInterface $http)
+    public function handleRequest(HttpInterface $http,BuilderInterface $builder)
     {
         $this->http = $http;
+        $this->app = $builder->loadApp();
+        //$this->boot($this->app['package']);
     }
 
     public function getResponse()
     {
         $route = Router::execute($this->http->getRequest());
 
-        if(!is_null($route['args'])){
+        if(isset($route['args'])){
             return $this->handleController($route['controller'],$route['action'],$route['args']);
         }else{
             return $this->handleController($route['controller'],$route['action']);
@@ -44,10 +48,14 @@ class AppKernel
 
     public function handleController($controllerName,$actionName,$args = array())
     {
-        if(file_exists(realpath(dirname(__FILE__)) . '/controller/' .$controllerName.'.php')){
-            include_once(realpath(dirname(__FILE__)) . '/controller/' . $controllerName . '.php');
-            $controller = $this->getController($controllerName);
-            if(method_exists($controllerName,$actionName)) {
+        $appName = $this->app['app_name'];
+
+        if(file_exists(realpath(dirname(__FILE__)) . DS.$appName.DS.'Controller'.DS.$controllerName.'.php')){
+            include_once(realpath(dirname(__FILE__)) .DS.$appName.DS.'Controller'.DS.$controllerName.'.php');
+
+            $controller = $this->getController($appName.DS.'Controller'.DS.$controllerName);
+
+            if(method_exists($appName.DS.'Controller'.DS.$controllerName,$actionName)) {
                 if(count($args)>0){
                     return $this->runController($controller, $actionName, $args);
                 }
@@ -55,6 +63,7 @@ class AppKernel
             }else{
                 throw new Exception('Não encontrado',404);
             }
+
         }else{
             throw new Exception('Não encontrado',404);
         }
@@ -76,12 +85,14 @@ class AppKernel
 
     private function boot($env)
     {
-        foreach($env['packages'] as $name => $path){
+        foreach($env as $name => $path){
             $loader = new ClassLoader($name,$path);
             $loader->register();
             $this->loaded[] = $loader;
         }
 //        var_dump($this->loaded);die;
     }
+
+
 
 }

@@ -10,6 +10,7 @@ define("DS",DIRECTORY_SEPARATOR);
 include_once('app/AppKernel.php');
 
 include_once('lib/Syph/Autoload/ClassLoader.php');
+include_once('vendor/autoload.php');
 $env = include_once('env.php');
 
 $app = new AppKernel($env);

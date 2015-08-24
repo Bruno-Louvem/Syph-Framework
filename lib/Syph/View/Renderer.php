@@ -28,14 +28,16 @@ class Renderer implements RendererInterface
 
     public function render($file,$vars)
     {
+        $file = explode(':',$file);
+        $path = 'app'.DS.$file[0].DS.'View';
         ob_start();
-        $this->createFileRender('app/view',$file,$vars);
+        $this->createFileRender($path,$file[1],$vars);
         return ob_get_clean();
     }
 
     public function createFileRender($path, $file,$vars)
     {
-        $filename = $path .'/'.$file;
+        $filename = $path .DS.$file;
         if($this->validatePath($filename)){
             $this->loadContent($filename,$vars);
         }

@@ -28,7 +28,7 @@ class Http implements HttpInterface
      */
     public function __construct()
     {
-        $this->path = $_GET['path'];
+        $this->path = (isset($_GET['path']))?$_GET['path']:"";
         $this->handleVerboses();
     }
 

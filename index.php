@@ -7,12 +7,13 @@
  */
 
 use Syph\Http\Http;
+use Syph\AppBuilder\AppBuilder;
 include_once('bootstrap.php');
 include_once('routing.php');
 
 
 
-$response = $app->handleRequest(new Http());
+$response = $app->handleRequest(new Http(),new AppBuilder());
 
 try{
     echo $app->getResponse();
