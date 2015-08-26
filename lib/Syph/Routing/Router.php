@@ -20,12 +20,12 @@ class Router
     }
 
     public static function execute($url) {
-
-        foreach (self::$routes as $pattern => $callback) {
-
-            if (preg_match($pattern, $url, $params)) {
+        $url = (substr($url,0,1) == '/')? $url : '/'.$url ;
+        foreach (self::$routes as $pattern => $callback)
+        {
+            if (preg_match($pattern, $url, $params))
+            {
                 array_shift($params);
-
                 return call_user_func_array($callback, array_values($params));
             }
         }

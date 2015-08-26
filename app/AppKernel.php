@@ -52,10 +52,10 @@ class AppKernel
 
         if(file_exists(realpath(dirname(__FILE__)) . DS.$appName.DS.'Controller'.DS.$controllerName.'.php')){
             include_once(realpath(dirname(__FILE__)) .DS.$appName.DS.'Controller'.DS.$controllerName.'.php');
+            $controller = $this->getController('\\'.$appName.'\\'.'Controller'.'\\'.$controllerName);
 
-            $controller = $this->getController($appName.DS.'Controller'.DS.$controllerName);
 
-            if(method_exists($appName.DS.'Controller'.DS.$controllerName,$actionName)) {
+            if(method_exists('\\'.$appName.'\\'.'Controller'.'\\'.$controllerName,$actionName)) {
                 if(count($args)>0){
                     return $this->runController($controller, $actionName, $args);
                 }
@@ -85,12 +85,11 @@ class AppKernel
 
     private function boot($env)
     {
-        foreach($env as $name => $path){
-            $loader = new ClassLoader($name,$path);
+        foreach($env as $name => $path) {
+            $loader = new ClassLoader($name, $path);
             $loader->register();
             $this->loaded[] = $loader;
         }
-//        var_dump($this->loaded);die;
     }
 
 

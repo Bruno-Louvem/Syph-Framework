@@ -14,10 +14,11 @@ use Syph\View\Renderer;
 
 class HomeController extends BaseController
 {
-    public function index(){
-        $title = 'Syph';
-        return View::render(new Renderer('DemoApp:index.php'),compact('title'));
-        //return "Syph";
+    public function index($nome){
+
+//        return View::render(new Renderer('DemoApp:example/index.php'),array('nome'=>$nome));
+        return View::render(new Renderer('DemoApp:example/index.html.twig'),array('nome'=>$nome,'teste'=>array('teste1','teste2')));
+
     }
 
 }

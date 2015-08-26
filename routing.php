@@ -8,7 +8,7 @@
  */
 use Syph\Routing\Router;
 
-Router::route('', function(){
+Router::route('/nome/(\w+)', function($nome){
     $controller = 'HomeController';
-    return array('controller'=>$controller,'action'=>'index');
+    return array('controller'=>$controller,'action'=>'index','args'=>$nome);
 });

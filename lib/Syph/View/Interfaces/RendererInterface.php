@@ -13,7 +13,7 @@ interface RendererInterface
 {
     public function loadContent($filename,$vars);
     public function render($file,$vars);
-    public function createFileRender($path,$file,$vars);
+    public function createFileRender($file,$vars);
     public function validatePath($path);
     public function getFilename();
 }
