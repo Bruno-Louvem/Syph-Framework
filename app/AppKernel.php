@@ -52,20 +52,18 @@ class AppKernel
 
         if(file_exists(realpath(dirname(__FILE__)) . DS.$appName.DS.'Controller'.DS.$controllerName.'.php')){
             include_once(realpath(dirname(__FILE__)) .DS.$appName.DS.'Controller'.DS.$controllerName.'.php');
-            $controller = $this->getController('\\'.$appName.'\\'.'Controller'.'\\'.$controllerName);
 
+            $controller = '\\'.$appName.'\\'.'Controller'.'\\'.$controllerName;
 
-            if(method_exists('\\'.$appName.'\\'.'Controller'.'\\'.$controllerName,$actionName)) {
-                if(count($args)>0){
-                    return $this->runController($controller, $actionName, $args);
-                }
-                return $this->runController($controller, $actionName);
+            if(method_exists($controller,$actionName)) {
+
+                return $this->runController($controller, $actionName, $args);
             }else{
-                throw new Exception('Não encontrado',404);
+                throw new \Exception(sprintf('Método: %s não encontrado',$actionName),404);
             }
 
         }else{
-            throw new Exception('Não encontrado',404);
+            throw new \Exception(sprintf('Controlador: %s não encontrado',$controllerName),404);
         }
 
     }
@@ -75,12 +73,15 @@ class AppKernel
         return new $controllerName;
     }
 
-    public function runController($controller,$action,$args = array())
+    public function runController($controllerName,$action,$args = array())
     {
-        if(count($args)>0){
-            return $controller->$action($args);
+
+        if(is_callable(array($controllerName ,$action)))
+        {
+//            $controller = $this->getController($controllerName);
+            return call_user_func_array(array( new $controllerName ,$action), $args);
         }
-        return $controller->$action();
+        throw new \Exception('Controller não pode ser chamado',404);
     }
 
     private function boot($env)

@@ -29,5 +29,6 @@ class Router
                 return call_user_func_array($callback, array_values($params));
             }
         }
+        throw new \Exception(sprintf('Rota: "%s" não encontrada',$url));
     }
 }

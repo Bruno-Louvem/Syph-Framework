@@ -9,6 +9,7 @@
 namespace Syph\View;
 
 
+use Syph\Twig\Extension\AssetsExtension;
 use Syph\View\Interfaces\RendererInterface;
 
 class Renderer implements RendererInterface
@@ -38,7 +39,9 @@ class Renderer implements RendererInterface
         switch($this->extenssion){
             case 'twig':
                 $loader = new \Twig_Loader_Filesystem($this->view_path);
-                $twig = new \Twig_Environment($loader);
+                $twig = new \Twig_Environment($loader,array('debug' => true,));
+                $twig->addExtension(new \Twig_Extension_Debug());
+                $twig->addExtension(new AssetsExtension());
                 $template = $twig->loadTemplate($this->view_request);
                 return $template->render($vars);
                 break;

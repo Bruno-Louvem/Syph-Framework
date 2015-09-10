@@ -11,8 +11,6 @@ use Syph\AppBuilder\AppBuilder;
 include_once('bootstrap.php');
 include_once('routing.php');
 
-
-
 $response = $app->handleRequest(new Http(),new AppBuilder());
 
 try{

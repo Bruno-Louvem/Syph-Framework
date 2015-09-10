@@ -10,5 +10,5 @@ use Syph\Routing\Router;
 
 Router::route('/nome/(\w+)', function($nome){
     $controller = 'HomeController';
-    return array('controller'=>$controller,'action'=>'index','args'=>$nome);
+    return array('controller'=>$controller,'action'=>'index','args'=>array($nome));
 });
