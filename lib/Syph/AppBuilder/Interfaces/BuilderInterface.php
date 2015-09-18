@@ -9,8 +9,12 @@
 namespace Syph\AppBuilder\Interfaces;
 
 
+use Syph\AppBuilder\Environment;
+
 interface BuilderInterface
 {
-    public function loadApp();
+    public function loadApp($appName);
+    public function register(Environment $env);
+    public function hasApp($appName);
 
 }

@@ -9,6 +9,6 @@
 use Syph\Routing\Router;
 
 Router::route('/nome/(\w+)', function($nome){
-    $controller = 'HomeController';
+    $controller = 'DemoApp:HomeController';
     return array('controller'=>$controller,'action'=>'index','args'=>array($nome));
 });

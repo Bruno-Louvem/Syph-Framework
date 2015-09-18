@@ -1,17 +1,16 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Bruno
- * Date: 12/08/2015
- * Time: 12:02
- */
 
 use Syph\Http\Http;
 use Syph\AppBuilder\AppBuilder;
-include_once('bootstrap.php');
-include_once('routing.php');
+
+$env = include_once('bootstrap.php');
+
+require_once __DIR__.'/app/AppKernel.php';
+
+$app = new AppKernel($env);
 
 $response = $app->handleRequest(new Http(),new AppBuilder());
+//var_dump($app);
 
 try{
     echo $app->getResponse();
